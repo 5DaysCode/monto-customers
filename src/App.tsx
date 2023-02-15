@@ -1,12 +1,13 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import CompanysData from "./components/CompanysData";
 
 function App() {
   return (
-    <div className="App">
-      <p>Start</p>
-    </div>
+    <>
+      <CompanysData />
+    </>
   );
 }
 
