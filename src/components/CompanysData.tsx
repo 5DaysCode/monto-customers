@@ -13,11 +13,8 @@ const CompanysData = () => {
   const [sortOrder, setSortOrder] = useState("desc");
   const [selectedType, setSelectedType] = useState("");
 
-  const api_url =
-    "https://my-json-server.typicode.com/capcito/frontend-ws/companies";
-
   useEffect(() => {
-    axios.get(api_url).then((response) => {
+    axios.get(`${process.env.REACT_APP_API}`).then((response) => {
       setCustomerCompanies(response.data);
     });
   }, []);
