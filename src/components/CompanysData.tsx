@@ -5,6 +5,13 @@ import { ICompany } from "../models/ICompanys";
 
 const CompanysData = () => {
   const [customerCompanies, setCustomerCompanies] = useState<ICompany[]>([]);
+  const [filteredCustomerCompanies, setFilteredCustomerCompanies] = useState<
+    ICompany[]
+  >([]);
+
+  const [customerSearchTerm, setCustomerSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("desc");
+  const [selectedType, setSelectedType] = useState("");
 
   const api_url =
     "https://my-json-server.typicode.com/capcito/frontend-ws/companies";
@@ -15,6 +22,20 @@ const CompanysData = () => {
     });
   }, []);
 
+  useEffect(() => {
+    setFilteredCustomerCompanies(
+      customerCompanies
+        .filter(
+          (company) =>
+            company.name
+              .toLowerCase()
+              .includes(customerSearchTerm.toLowerCase()) &&
+            (selectedType === "" || company.type === selectedType)
+        )
+        .sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id))
+    );
+  }, [customerCompanies, customerSearchTerm, sortOrder, selectedType]);
+
   return (
     <div>
       <div className="px-3 py-4">
@@ -22,10 +43,15 @@ const CompanysData = () => {
           <input
             className="border rounded w-1/2 p-2 mr-4"
             type="text"
+            value={customerSearchTerm}
+            onChange={(e) => setCustomerSearchTerm(e.target.value)}
             placeholder="Search by company name"
           />
 
-          <select className="border rounded w-1/4 p-2">
+          <select
+            className="border rounded w-1/4 p-2"
+            onChange={(e) => setSelectedType(e.target.value)}
+          >
             <option value="">All types</option>
             <option value="AB">AB</option>
             <option value="EF">EF</option>
@@ -33,15 +59,21 @@ const CompanysData = () => {
           </select>
 
           <div className="w-1/4 ml-4 flex">
-            <button className="bg-blue-500 border border-blue-500 rounded p-2 mr-2 text-white hover:bg-blue-600">
+            <button
+              onClick={() => setSortOrder("asc")}
+              className="bg-blue-500 border border-blue-500 rounded p-2 mr-2 text-white hover:bg-blue-600"
+            >
               ASC
             </button>
-            <button className="bg-blue-500 border border-blue-500 rounded p-2 text-white hover:bg-blue-600">
+            <button
+              onClick={() => setSortOrder("desc")}
+              className="bg-blue-500 border border-blue-500 rounded p-2 text-white hover:bg-blue-600"
+            >
               DESC
             </button>
           </div>
         </div>
-        <CompanysDataTable companies={customerCompanies} />
+        <CompanysDataTable companies={filteredCustomerCompanies} />
       </div>
     </div>
   );
