@@ -1,5 +1,6 @@
 import React from "react";
-import { ICompany } from "../models/ICompanys";
+import { ICompany } from "../../models/ICompanys";
+import "./CompanysDataTable.css";
 
 interface Props {
   companies: ICompany[];

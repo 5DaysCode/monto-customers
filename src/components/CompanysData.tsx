@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CompanysDataTable from "../shared/CompanysDataTable";
+import CompanysDataTable from "../shared/CompanysDataTable/CompanysDataTable";
 import { ICompany } from "../models/ICompanys";
 
 const CompanysData = () => {
