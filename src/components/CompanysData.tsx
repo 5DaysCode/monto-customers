@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import CompanysDataTable from "../shared/CompanysDataTable";
+import { ICompany } from "../models/ICompanys";
 
 const CompanysData = () => {
-  const [customerCompanies, setCustomerCompanies] = useState();
+  const [customerCompanies, setCustomerCompanies] = useState<ICompany[]>([]);
 
   const api_url =
     "https://my-json-server.typicode.com/capcito/frontend-ws/companies";
 
   useEffect(() => {
     axios.get(api_url).then((response) => {
-      console.log("Data => ", response.data);
+      setCustomerCompanies(response.data);
     });
   }, []);
 
@@ -39,6 +41,7 @@ const CompanysData = () => {
             </button>
           </div>
         </div>
+        <CompanysDataTable companies={customerCompanies} />
       </div>
     </div>
   );
