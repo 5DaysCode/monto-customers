@@ -13,7 +13,35 @@ const CompanysData = () => {
     });
   }, []);
 
-  return <div>Company Data</div>;
+  return (
+    <div>
+      <div className="px-3 py-4">
+        <div className="mb-4 flex justify-between">
+          <input
+            className="border rounded w-1/2 p-2 mr-4"
+            type="text"
+            placeholder="Search by company name"
+          />
+
+          <select className="border rounded w-1/4 p-2">
+            <option value="">All types</option>
+            <option value="AB">AB</option>
+            <option value="EF">EF</option>
+            <option value="HB">HB</option>
+          </select>
+
+          <div className="w-1/4 ml-4 flex">
+            <button className="bg-blue-500 border border-blue-500 rounded p-2 mr-2 text-white hover:bg-blue-600">
+              ASC
+            </button>
+            <button className="bg-blue-500 border border-blue-500 rounded p-2 text-white hover:bg-blue-600">
+              DESC
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default CompanysData;
