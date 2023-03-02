@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import CompanysDataTable from "../shared/CompanysDataTable/CompanysDataTable";
 import { ICompany } from "../models/ICompanys";
@@ -19,7 +19,7 @@ const CompanysData = () => {
     });
   }, []);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     setFilteredCustomerCompanies(
       customerCompanies
         .filter(
@@ -31,6 +31,18 @@ const CompanysData = () => {
         )
         .sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id))
     );
+  }, [customerCompanies, customerSearchTerm, sortOrder, selectedType]); */
+
+  const filteredAndSortedCompanies = useMemo(() => {
+    return customerCompanies
+      .filter(
+        (company) =>
+          company.name
+            .toLowerCase()
+            .includes(customerSearchTerm.toLowerCase()) &&
+          (selectedType === "" || company.type === selectedType)
+      )
+      .sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id));
   }, [customerCompanies, customerSearchTerm, sortOrder, selectedType]);
 
   return (
@@ -70,7 +82,7 @@ const CompanysData = () => {
             </button>
           </div>
         </div>
-        <CompanysDataTable companies={filteredCustomerCompanies} />
+        <CompanysDataTable companies={filteredAndSortedCompanies} />
       </div>
     </div>
   );
