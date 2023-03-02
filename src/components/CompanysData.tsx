@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import CompanysDataTable from "../shared/CompanysDataTable/CompanysDataTable";
+
+import { filterAndSortCompanies } from "../modules/fiilteringAndSorting/filterAndSortCompanies";
+
 import { ICompany } from "../models/ICompanys";
 
 const CompanysData = () => {
@@ -19,7 +22,13 @@ const CompanysData = () => {
     });
   }, []);
 
-  /*   useEffect(() => {
+  /*  
+    THIS COUPLE TIED CODE IS REDONE AND REUSED IN THIS FILE AND FILTERANDSORTCOMPANIES.TSX  MODULE  
+    SEE IMPORT AND USE MEMO  FUNCTION BELOW
+   useEffect(() => {
+
+
+
     setFilteredCustomerCompanies(
       customerCompanies
         .filter(
@@ -33,7 +42,7 @@ const CompanysData = () => {
     );
   }, [customerCompanies, customerSearchTerm, sortOrder, selectedType]); */
 
-  const filteredAndSortedCompanies = useMemo(() => {
+  /*   const filteredAndSortedCompanies = useMemo(() => {
     return customerCompanies
       .filter(
         (company) =>
@@ -43,7 +52,29 @@ const CompanysData = () => {
           (selectedType === "" || company.type === selectedType)
       )
       .sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id));
-  }, [customerCompanies, customerSearchTerm, sortOrder, selectedType]);
+  }, [customerCompanies, customerSearchTerm, sortOrder, selectedType]); */
+
+  /*   const filteredAndSortedCompanies = filterAndSortCompanies(
+    customerCompanies,
+    customerSearchTerm,
+    selectedType,
+    sortOrder
+  ); 
+  
+  
+  
+  */
+
+  const filteredAndSortedCompanies = useMemo(
+    () =>
+      filterAndSortCompanies(
+        customerCompanies,
+        customerSearchTerm,
+        selectedType,
+        sortOrder
+      ),
+    [customerCompanies, customerSearchTerm, selectedType, sortOrder]
+  );
 
   return (
     <div>
